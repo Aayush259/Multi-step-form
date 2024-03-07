@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --Marine-blue: hsl(213, 96%, 18%);
+    --Purplish-blue: hsl(243, 100%, 62%);
+    --Pastel-blue: hsl(228, 100%, 84%);
+    --Light-blue: hsl(206, 94%, 87%);
+    --Strawberry-red: hsl(354, 84%, 57%);
+    --Cool-gray: hsl(231, 11%, 63%);
+    --Light-gray: hsl(229, 24%, 87%);
+    --Magnolia: hsl(217, 100%, 97%);
+    --Alabaster: hsl(231, 100%, 99%);
+    --White: hsl(0, 0%, 100%);
+}
+
+body {
+    background-color: var(--Magnolia);
+    font-family: Ubuntu, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#main {
+    background-color: var(--White);
+    width: 95vw;
+    max-width: 1000px;
+    padding: 1.2rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+#Sidebar {
+    background-image: url("../assets/images/bg-sidebar-desktop.svg");
+    background-size: cover;
+    padding: 2rem;
+    color: var(--Alabaster);
+    width: 35%;
+    height: 500px;
+    border-radius: 10px;
+}
+
+.step {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+}
+
+.step > .number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    height: 30px;
+    width: 30px;
+    border: 1px solid var(--Light-blue);
+    border-radius: 50%;
+}
+
+.step .text p:nth-child(1) {
+    font-size: 13px;
+    line-height: 1.2;
+    color: var(--Pastel-blue);
+    font-weight: 100;
+}
+
+.step .text p:nth-child(2) {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+}
+
+.text > p {
+    text-transform: uppercase;
+}
+
+#form {
+    padding: 2rem 5rem 2rem 1.2rem;
+}
+
+h1 {
+    color: var(--Marine-blue);
+}
+
+.sub-title {
+    color: var(--Cool-gray);
+    margin-top: 0.6rem;
+}
+
+form {
+    margin-top: 2.4rem;
+    height: 80%;
+    position: relative;
+}
+
+form label {
+    color: var(--Marine-blue);
+    font-weight: 500;
+}
+
+form input {
+    width: 100%;
+    height: 40px;
+    margin-top: 0.5rem;
+    border: 1px solid var(--Light-gray);
+    border-radius: 5px;
+    font-weight: 600;
+    padding-left: 13px;
+    margin-bottom: 1.4rem;
+}
+
+.next-step-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--Marine-blue);
+    color: var(--White);
+    padding: 11px 18px;
+}
+
+.active-step {
+    background-color: var(--Light-blue);
+    color: var(--Marine-blue);
+}
