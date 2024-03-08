@@ -161,23 +161,199 @@ const Validate = () => {
     }
 }
 
+/*
+    This function manipulates the DOM based on the current step number.
+*/
+const GoToStep = (stepNumber, form) => {
+    
+    if (stepNumber === 1) {     // When stepNumber is 1.
+        form.innerHTML = `
+        <label for="name">Name<span class="error-text"></span></label>
+        <input type="text" id="name" name="name" placeholder="e.g. Stephen King" autocomplete="off">
+
+        <label for="email">Email Address<span class="error-text"></span></label>
+        <input type="text" id="email" name="email" placeholder="e.g. stephenking@lorem.com" autocomplete="off">
+
+        <label for="phone">Phone Number<span class="error-text"></span></label>
+        <input type="text" id="phone" name="phone" placeholder="e.g. +1 234 567 890" autocomplete="off">
+
+        <button type="submit" class="next-step-btn">Next Step</button>
+        `;
+    } else if (stepNumber === 2) {      // When stepNumber is 2.
+        form.innerHTML = `
+        <div class="image-option-container">
+                    
+            <label for="arcade" class="image-option">
+                <input type="image" src="./assets/images/icon-arcade.svg" alt="Arcade" id="arcade" value="arcade">
+
+                <div class="input-image-text">
+                    <p class="image-input-title">Arcade</p>
+                    <p class="image-input-sub-title">&dollar;9/mo</p>
+                    <p class="hidden">2 months free</p>
+                </div>
+            </label>
+
+            <label for="advanced" class="image-option">
+                <input type="image" src="./assets/images/icon-advanced.svg" alt="Advanced" id="advanced" value="advanced">
+
+                <div class="input-image-text">
+                    <p class="image-input-title">Advanced</p>
+                    <p class="image-input-sub-title">&dollar;12/mo</p>
+                    <p class="hidden">2 months free</p>
+                </div>
+            </label>
+
+            <label for="pro" class="image-option">
+                <input type="image" src="./assets/images/icon-pro.svg" alt="Pro" id="pro" value="pro">
+
+                <div class="input-image-text">
+                    <p class="image-input-title">Pro</p>
+                    <p class="image-input-sub-title">&dollar;15/mo</p>
+                    <p class="hidden">2 months free</p>
+                </div>
+            </label>
+
+        </div>
+
+        <div class="plan-type-container">
+
+            <p class="plan-type-text monthly active-display-plan">Monthly</p>
+            <input type="checkbox" name="Plan-Type" id="plan-type" onclick="ActivateToggleButtonPlanType()">
+            <label for="plan-type"></label>
+            <p class="plan-type-text yearly">Yearly</p>
+        </div>
+
+        <div class="desktop-next-step-button">
+            <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
+            <button type="submit" class="next-step-btn">Next Step</button>
+        </div>
+        `;
+    }
+}
+
+/*
+    This function removes the 'active-step' class from the .number element of stepnumber. Means the number whose background color shows the active state of the step, this function removes that background color.
+*/
+const RemoveActiveStep = (stepNumber) => {
+    const CurrentStepNumber = document.querySelector(`#Sidebar .step:nth-child(${stepNumber}) .number`);
+    CurrentStepNumber.classList.remove('active-step');
+}
+
+/*
+    This function adds the 'active-step' class from the .number element of stepnumber. Means the number whose background color shows the active state of the step, this function adds that background color.
+*/
+const AddActiveStep = (stepNumber) => {
+    const CurrentStepNumber = document.querySelector(`#Sidebar .step:nth-child(${stepNumber}) .number`);
+    CurrentStepNumber.classList.add('active-step');
+}
+
+// Initializing currentStep by 1.
 let currentStep = 1;
 
+// Getting form element.
 const Form = document.querySelector('form');
+
+// Getting Next step submit button which is displayed in mobile screens.
 const NextStepSubmitBtnMobile = document.querySelector('.mobile-next-step-button > button');
+
+/*
+    This function is responsible for the behavior when the form is submitted or switches to next step.
+*/
+const Submit = () => {
+    
+    // If the form validation returns true, then go to next step and remove active step from the previous step.
+    if (Validate()){
+        RemoveActiveStep(currentStep);
+        // Increase the current step by one.
+        currentStep += 1;
+        GoToStep(currentStep, Form);
+        AddActiveStep(currentStep);
+    }
+
+}
 
 Form.addEventListener('submit', (e) => {
 
     e.preventDefault();
 
-    if (Validate()){
-        currentStep += 1;
-    }
+    Submit();
+
 })
 
-NextStepSubmitBtnMobile.addEventListener('click', () => {
+NextStepSubmitBtnMobile.addEventListener('click', (e) => {
 
-    if (Validate()) {
-        currentStep += 1;
-    }
+    e.preventDefault();
+
+    Submit();
+
 })
+
+/*
+    This function navigates the form to previous step by removing the active step class from current step and adding the active step class to previous step.
+*/
+const GoBack = () => {
+    RemoveActiveStep(currentStep);
+    currentStep -= 1;
+    GoToStep(currentStep, document.querySelector('form'));
+    AddActiveStep(currentStep);
+}
+
+/*
+    This function is responsible for the behavior of toggle button in second step.
+*/
+const ActivateToggleButtonPlanType = () => {
+
+    // Getting toggle button.
+    const ToggleButton = document.querySelector('#plan-type');
+
+    // Getting all paragraph elements which contains discount text.
+    const DiscountElements = document.querySelectorAll('input[type="image"] + .input-image-text > p:nth-child(3)');
+
+    // Getting arcade price element.
+    const ArcadePrice = document.querySelector('label[for="arcade"] > .input-image-text > p:nth-child(2)');
+
+    // Getting advanced price element.
+    const AdvancedPrice = document.querySelector('label[for="advanced"] > .input-image-text > p:nth-child(2)');
+
+    // Getting pro price element.
+    const ProPrice = document.querySelector('label[for="pro"] > .input-image-text > p:nth-child(2)');
+
+    // If toggle button is checked, means toggle is towards yearly plan then update the prices according to yearly plan otherwise set the price according to monthly plan.
+    if (ToggleButton.checked) {
+        
+        // Removing bold formatting of Monthly element.
+        ToggleButton.previousElementSibling.classList.remove('active-display-plan');
+
+        // Setting the prices for plans according to yearly plan.
+        ArcadePrice.innerHTML = `&dollar;90/yr`;
+        AdvancedPrice.innerHTML = `&dollar;120/yr`;
+        ProPrice.innerHTML = `&dollar;150/yr`;
+
+        // Displaying discount on yearly plan.
+        DiscountElements.forEach(element => {
+            element.classList.remove('hidden');
+        })
+
+        // Adding bold formatting of Yearly element.
+        ToggleButton.nextElementSibling.nextElementSibling.classList.add('active-display-plan');
+
+    } else {
+        
+        // Adding bold formatting on Monthly plan.
+        ToggleButton.previousElementSibling.classList.add('active-display-plan');
+
+        // Setting the prices for plans according to monthly plan.
+        ArcadePrice.innerHTML = `&dollar;9/mo`;
+        AdvancedPrice.innerHTML = `&dollar;12/mo`;
+        ProPrice.innerHTML = `&dollar;15/mo`;
+
+        // Hiding discount on yearly plan.
+        DiscountElements.forEach(element => {
+            element.classList.add('hidden');
+        })
+
+        // Removing bold formatting on Yearly plan.
+        ToggleButton.nextElementSibling.nextElementSibling.classList.remove('active-display-plan');
+
+    }
+}
