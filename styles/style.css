@@ -25,7 +25,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 #main {
@@ -158,4 +158,113 @@ form input:active, form input:focus {
 
 .error-input {
     border-color: var(--Strawberry-red) !important;
+}
+
+.hidden {
+    display: none;
+}
+
+@media only screen and (max-width: 830px) {
+    #Sidebar {
+        background-size: cover;
+        padding: 1rem;
+    }
+
+    #form {
+        padding-top: 1rem;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    body {
+        justify-content: flex-start;
+    }
+
+    #main {
+        margin-top: 8rem;
+    }
+
+    #Sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 3rem;
+        gap: 2rem;
+        width: 100vw;
+        height: 200px;
+        margin: 0;
+        background-image: url('../assets/images/bg-sidebar-mobile.svg');
+        background-size: cover;
+        border-radius: 0;
+    }
+
+    .step > .number {
+        height: 40px;
+        width: 40px;
+    }
+
+    #form {
+        padding: 1rem 1.2rem 0 1.2rem;
+        width: 100%;
+    }
+
+    .step .text {
+        display: none;
+        height: auto;
+    }
+
+    form {
+        margin-top: 1.6rem;
+    }
+
+    form input {
+        margin-bottom: 1.2rem;
+    }
+
+    form > button[type="submit"] {
+        display: none;
+    }
+
+    .mobile-next-step-button {
+        background-color: var(--White);
+        width: 100vw;
+        padding: 1.2rem;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .mobile-next-step-button > button {
+        position: initial;
+        display: inline-block;
+        padding: 15px 18px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #main {
+        margin-top: 7.1rem;
+    }
+
+    #Sidebar {
+        gap: 1rem;
+    }
+
+    .step > .number {
+        height: 35px;
+        width: 35px;
+    }
+
+    #form {
+        padding: 1rem 0 0 0;
+    }
 }

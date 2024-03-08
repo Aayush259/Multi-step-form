@@ -164,12 +164,20 @@ const Validate = () => {
 let currentStep = 1;
 
 const Form = document.querySelector('form');
+const NextStepSubmitBtnMobile = document.querySelector('.mobile-next-step-button > button');
 
 Form.addEventListener('submit', (e) => {
 
     e.preventDefault();
 
-    if(Validate()){
+    if (Validate()){
+        currentStep += 1;
+    }
+})
+
+NextStepSubmitBtnMobile.addEventListener('click', () => {
+
+    if (Validate()) {
         currentStep += 1;
     }
 })
