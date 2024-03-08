@@ -155,3 +155,7 @@ form input:active, form input:focus {
     color: var(--Strawberry-red);
     font-weight: 500;
 }
+
+.error-input {
+    border-color: var(--Strawberry-red) !important;
+}
