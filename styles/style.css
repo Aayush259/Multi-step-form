@@ -129,6 +129,17 @@ form input:active, form input:focus {
     border-color: var(--Purplish-blue);
 }
 
+form label.image-option:active {
+    outline: 0;
+    border: 1px solid var(--Purplish-blue);
+}
+
+form label.active-focus {
+    outline: 0;
+    border: 1px solid var(--Purplish-blue);
+    background-color: var(--Magnolia);
+}
+
 .image-option-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -256,6 +267,10 @@ label[for="plan-type"]::before {
 .active-step {
     background-color: var(--Light-blue);
     color: var(--Marine-blue);
+}
+
+p.error-text {
+    margin-bottom: 10px;
 }
 
 .error-text {

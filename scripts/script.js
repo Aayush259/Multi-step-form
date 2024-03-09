@@ -12,7 +12,7 @@ const DisplayError = (Input, message) => {
     const ErrorText = Label.querySelector('.error-text');
 
     // Updating the error-text with the required error message.
-    ErrorText.innerHTML = `${message}`;
+    ErrorText.innerHTML = `${message}*`;
 
     // Adding the class of 'error-input' to the input element.
     Input.classList.add('error-input');
@@ -113,52 +113,102 @@ const ValidFormat = (string, type) => {
 /*
     This function validates the form.
 */
-const Validate = () => {
+const Validate = (stepNumber) => {
 
     // Getting all input fields from the document.
     const InputFields = document.querySelectorAll('input');
 
-    // Removing the previous error messages from screen.
-    InputFields.forEach((field) => {
-
-        DisplayError(field, '');
-
-        // Removing the error-input class from the input element.
-        field.classList.remove('error-input');
-    })
-
     // Initializing the number of errors in the form with 0;
     let numberOfErrors = 0;
 
-    InputFields.forEach((field) => {
+    // For step 1, validate the form according to the following if block.
+    if (stepNumber === 1) {
 
-        // If there is no value in the input field then display the error message for required field.
-        if (field.value === '') {
-            DisplayError(field, 'This field is required');
+        // Removing the previous error messages from screen.
+        InputFields.forEach((field) => {
+
+            DisplayError(field, '');
+
+            // Removing the error-input class from the input element.
+            field.classList.remove('error-input');
+        })
+
+        InputFields.forEach((field) => {
+
+            // If there is no value in the input field then display the error message for required field.
+            if (field.value === '') {
+                DisplayError(field, 'This field is required');
+                numberOfErrors += 1;
+            }
+            // If the length of name is less than and equal to 2 then display error message.
+            else if (field.id === 'name' && field.value.length <= 2) {
+                DisplayError(field, 'Name is too short');
+                numberOfErrors += 1;
+            }
+            // If the format of input field is invalid then display error message.
+            else if (!ValidFormat(field.value, field.id)) {
+                DisplayError(field, 'Invalid Format');
+                numberOfErrors += 1;
+            }
+            // If length of phone is invalid then display error message.
+            else if (field.id === 'phone' && (field.value.length >= 14 || field.value.length <= 12)) {
+                DisplayError(field, 'Invalid phone number');
+                numberOfErrors += 1;
+            }
+        })
+    } else if (stepNumber === 2) {      // For step 2, validate the form according to the following else if block
+
+        document.querySelector('p.error-text').innerHTML = ``;
+        document.querySelector('p.error-text').classList.add('hidden');
+
+        // Initializing the condition that the image selected (input element with type image) with false.
+        let imageSelected = false;
+
+        // If the image element (input type with image) is selected then number of errors is zero, otherwise it will show an error.
+        InputFields.forEach(field => {
+            if (field.parentNode.classList.contains('active-focus')) {
+                imageSelected = true;
+            }
+        })
+
+        if (imageSelected) {
+            numberOfErrors = 0;
+        } else {
+            document.querySelector('p.error-text').innerHTML = `Select a plan*`;
+            document.querySelector('p.error-text').classList.remove('hidden');
             numberOfErrors += 1;
         }
-        // If the length of name is less than and equal to 2 then display error message.
-        else if (field.id === 'name' && field.value.length <= 2) {
-            DisplayError(field, 'Name is too short');
-            numberOfErrors += 1;
-        }
-        // If the format of input field is invalid then display error message.
-        else if (!ValidFormat(field.value, field.id)) {
-            DisplayError(field, 'Invalid Format');
-            numberOfErrors += 1;
-        }
-        // If length of phone is invalid then display error message.
-        else if (field.id === 'phone' && (field.value.length >= 14 || field.value.length <= 12)) {
-            DisplayError(field, 'Invalid phone number');
-            numberOfErrors += 1;
-        }
-    })
+    }
 
     if (numberOfErrors === 0) {
         return true;
     } else {
         return false;
     }
+}
+
+/*
+    This function handles the behavior and styling of the label element of the focused element (input element with type image) is focused.
+*/
+const InputImageFocus = (focusedElement) => {
+
+    // Getting parent element of the focused element.
+    const ParentFocusedElement = focusedElement.parentNode;
+
+    // Adding class of active-focus to the parent element (label) of the focused element.
+    ParentFocusedElement.classList.add('active-focus');
+}
+
+/*
+    This function handles the behavior and styling of the label element of the focused element (input element with type image) is removed from focused state.
+*/
+const InputImageRemoveFocus = (removedFocusedElement) => {
+
+    // Getting parent element of the removed focused element.
+    const ParentRemovedFocusedElement = removedFocusedElement.parentNode;
+
+    // Removing class of active-focus to the parent element (label) of the focused element.
+    ParentRemovedFocusedElement.classList.remove('active-focus');
 }
 
 /*
@@ -181,10 +231,12 @@ const GoToStep = (stepNumber, form) => {
         `;
     } else if (stepNumber === 2) {      // When stepNumber is 2.
         form.innerHTML = `
+        <p class="error-text hidden"></p>
+
         <div class="image-option-container">
                     
             <label for="arcade" class="image-option">
-                <input type="image" src="./assets/images/icon-arcade.svg" alt="Arcade" id="arcade" value="arcade">
+                <input type="image" src="./assets/images/icon-arcade.svg" alt="Arcade" id="arcade" value="arcade" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
                     <p class="image-input-title">Arcade</p>
@@ -194,7 +246,7 @@ const GoToStep = (stepNumber, form) => {
             </label>
 
             <label for="advanced" class="image-option">
-                <input type="image" src="./assets/images/icon-advanced.svg" alt="Advanced" id="advanced" value="advanced">
+                <input type="image" src="./assets/images/icon-advanced.svg" alt="Advanced" id="advanced" value="advanced" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
                     <p class="image-input-title">Advanced</p>
@@ -204,7 +256,7 @@ const GoToStep = (stepNumber, form) => {
             </label>
 
             <label for="pro" class="image-option">
-                <input type="image" src="./assets/images/icon-pro.svg" alt="Pro" id="pro" value="pro">
+                <input type="image" src="./assets/images/icon-pro.svg" alt="Pro" id="pro" value="pro" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
                     <p class="image-input-title">Pro</p>
@@ -228,6 +280,9 @@ const GoToStep = (stepNumber, form) => {
             <button type="submit" class="next-step-btn">Next Step</button>
         </div>
         `;
+
+    } else if (stepNumber === 3) {
+        console.log('Step 3 entered');
     }
 }
 
@@ -262,7 +317,7 @@ const NextStepSubmitBtnMobile = document.querySelector('.mobile-next-step-button
 const Submit = () => {
     
     // If the form validation returns true, then go to next step and remove active step from the previous step.
-    if (Validate()){
+    if (Validate(currentStep)){
         RemoveActiveStep(currentStep);
         // Increase the current step by one.
         currentStep += 1;
