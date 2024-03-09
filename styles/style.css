@@ -385,3 +385,26 @@ label[for="plan-type"]::before {
         padding: 1rem 0 0 0;
     }
 }
+
+@media only screen and (max-width: 580px) {
+    .image-option-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    form input[type="image"] {
+        margin: 0;
+    }
+
+    .image-option {
+        padding: 20px 0;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0px;
+    }
+
+    .image-input-title {
+        margin: 0;
+    }
+}
