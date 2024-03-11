@@ -215,8 +215,11 @@ const InputImageRemoveFocus = (removedFocusedElement) => {
     This function manipulates the DOM based on the current step number.
 */
 const GoToStep = (stepNumber, form) => {
+
+    const Header = document.getElementById('header');
     
     if (stepNumber === 1) {     // When stepNumber is 1.
+        Header.innerHTML = `Personal Info`;
         form.innerHTML = `
         <label for="name">Name<span class="error-text"></span></label>
         <input type="text" id="name" name="name" placeholder="e.g. Stephen King" autocomplete="off">
@@ -230,6 +233,8 @@ const GoToStep = (stepNumber, form) => {
         <button type="submit" class="next-step-btn">Next Step</button>
         `;
     } else if (stepNumber === 2) {      // When stepNumber is 2.
+        Header.innerHTML = `Select your plan`;
+        
         form.innerHTML = `
         <p class="error-text hidden"></p>
 
