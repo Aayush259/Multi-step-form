@@ -217,9 +217,11 @@ const InputImageRemoveFocus = (removedFocusedElement) => {
 const GoToStep = (stepNumber, form) => {
 
     const Header = document.getElementById('header');
+    const BelowHeader = document.getElementById('below-header');
     
     if (stepNumber === 1) {     // When stepNumber is 1.
         Header.innerHTML = `Personal Info`;
+        BelowHeader.innerHTML = `Please provide your name, email address, and phone number.`;
         form.innerHTML = `
         <label for="name">Name<span class="error-text"></span></label>
         <input type="text" id="name" name="name" placeholder="e.g. Stephen King" autocomplete="off">
@@ -234,7 +236,8 @@ const GoToStep = (stepNumber, form) => {
         `;
     } else if (stepNumber === 2) {      // When stepNumber is 2.
         Header.innerHTML = `Select your plan`;
-        
+        BelowHeader.innerHTML = `You have the option of monthly or yearly billing.`;
+
         form.innerHTML = `
         <p class="error-text hidden"></p>
 
@@ -287,7 +290,67 @@ const GoToStep = (stepNumber, form) => {
         `;
 
     } else if (stepNumber === 3) {
-        console.log('Step 3 entered');
+        Header.innerHTML = `Pick add-ons`;
+        BelowHeader.innerHTML = `Add-ons help enhance your gaming experience.`;
+        
+        form.innerHTML = `
+        <label for="online-service" class="add-ons">
+
+            <div class="input-add-ons">
+                <input type="checkbox" name="online-service" id="online-service" autocomplete="off">
+                <div class="description">
+                    <p class="checkbox-input-title">Online service</p>
+                    <p class="checkbox-input-sub-title">Access to multiplayer games</p>
+                </div>
+            </div>
+
+            <p class="additional-price-add-ons">&plus;&dollar;1/mo</p>
+
+        </label>
+
+        <label for="larger-storage" class="add-ons">
+
+            <div class="input-add-ons">
+                <input type="checkbox" name="larger-storage" id="larger-storage" autocomplete="off">
+                <div class="description">
+                    <p class="checkbox-input-title">Larger storage</p>
+                    <p class="checkbox-input-sub-title">Extra 1TB of cloud save</p>
+                </div>
+            </div>
+
+            <p class="additional-price-add-ons">&plus;&dollar;2/mo</p>
+
+        </label>
+
+        <label for="customizable-profile" class="add-ons">
+
+            <div class="input-add-ons">
+                <input type="checkbox" name="customizable-profile" id="customizable-profile"  autocomplete="off">
+                <div class="description">
+                    <p class="checkbox-input-title">Customizable profile</p>
+                    <p class="checkbox-input-sub-title">Custom theme on your profile</p>
+                </div>
+            </div>
+
+            <p class="additional-price-add-ons">&plus;&dollar;2/mo</p>
+            
+        </label>
+
+        <script>
+            const Inputs = document.querySelectorAll('input[type="checkbox"]');
+
+            Inputs.forEach(input => {
+                input.addEventListener('click', () => {
+                    input.parentNode.parentNode.classList.toggle('purple-border');
+                })
+            })
+        </script>
+        
+        <div class="mobile-next-step-button">
+            <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
+            <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
+        </div>
+        `;
     }
 }
 

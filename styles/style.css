@@ -169,15 +169,15 @@ form input[type="image"] {
     margin-left: 16px;
 }
 
-.image-input-title {
+.image-input-title, .checkbox-input-title {
     font-weight: 800;
 }
 
-.image-input-sub-title {
+.image-input-sub-title, .checkbox-input-sub-title {
     color: var(--Cool-gray);
 }
 
-.image-input-sub-title, .image-input-sub-title + p {
+.image-input-sub-title, .image-input-sub-title + p, .checkbox-input-sub-title {
     font-size: 14px;
     margin-top: 7px;
 }
@@ -232,6 +232,42 @@ label[for="plan-type"]::before {
 
 #plan-type:checked + label::before {
     transform: translateX(25px);
+}
+
+.add-ons {
+    width: 135%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem 1rem 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--Light-gray);
+    border-radius: 10px;
+}
+
+.add-ons .input-add-ons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.add-ons input[type="checkbox"] {
+    height: 18px;
+    width: 18px;
+    margin: auto 0;
+    mix-blend-mode: multiply;
+    outline: 1px auto var(--Light-gray);
+}
+
+.add-ons input[type="checkbox"]:checked {
+    accent-color: var(--Purplish-blue);
+    border-color: var(--Purplish-blue);
+}
+
+.purple-border {
+    background-color: hsla(243, 100%, 62%, 0.075);
+    border-color: var(--Purplish-blue);
 }
 
 .previous-step-btn {
