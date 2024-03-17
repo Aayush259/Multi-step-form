@@ -1,5 +1,12 @@
 console.log("Square");
 
+let userName = '';
+let userEmail = '';
+let userPhone = '';
+let monthly = true;
+let imageOption = '';
+let addOns = [];
+
 /*
     This function displays error on screen.
 */
@@ -216,14 +223,17 @@ const InputImageRemoveFocus = (removedFocusedElement) => {
 */
 const GoToStep = (stepNumber, form) => {
 
+    // Getting go back button.
     const GoBackButton = document.getElementById('go-back-btn');
 
+    // If current step number is not 1 then dispay go back button otherwise hide this go back button.
     if (stepNumber !== 1) {
         GoBackButton.classList.remove('hidden');
     } else {
         GoBackButton.classList.add('hidden');
     }
 
+    // Getting header and below header text elements.
     const Header = document.getElementById('header');
     const BelowHeader = document.getElementById('below-header');
     
@@ -251,7 +261,7 @@ const GoToStep = (stepNumber, form) => {
 
         <div class="image-option-container">
                     
-            <label for="arcade" class="image-option">
+            <label for="arcade" class="image-option" onclick="imageOption = 'Arcade'">
                 <input type="image" src="./assets/images/icon-arcade.svg" alt="Arcade" id="arcade" value="arcade" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
@@ -261,7 +271,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </label>
 
-            <label for="advanced" class="image-option">
+            <label for="advanced" class="image-option" onclick="imageOption = 'Advanced'">
                 <input type="image" src="./assets/images/icon-advanced.svg" alt="Advanced" id="advanced" value="advanced" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
@@ -271,7 +281,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </label>
 
-            <label for="pro" class="image-option">
+            <label for="pro" class="image-option" onclick="imageOption = 'Pro'">
                 <input type="image" src="./assets/images/icon-pro.svg" alt="Pro" id="pro" value="pro" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
@@ -301,6 +311,19 @@ const GoToStep = (stepNumber, form) => {
         Header.innerHTML = `Pick add-ons`;
         BelowHeader.innerHTML = `Add-ons help enhance your gaming experience.`;
         
+        let OnlineServicePrice = ``;
+        let LargerStoragePrice = ``;
+        let CustomizableProfilePrice = ``;
+
+        if (monthly) {
+            OnlineServicePrice = `&plus;&dollar;1/mo`;
+            LargerStoragePrice = `&plus;&dollar;2/mo`;
+            CustomizableProfilePrice = `&plus;&dollar;2/mo`;
+        } else {
+            OnlineServicePrice = `&plus;&dollar;10/yr`;
+            LargerStoragePrice = `&plus;&dollar;20/yr`;
+            CustomizableProfilePrice = `&plus;&dollar;20/yr`;
+        }
         form.innerHTML = `
         <label for="online-service" class="add-ons">
 
@@ -312,7 +335,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </div>
 
-            <p class="additional-price-add-ons">&plus;&dollar;1/mo</p>
+            <p class="additional-price-add-ons">${OnlineServicePrice}</p>
 
         </label>
 
@@ -326,7 +349,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </div>
 
-            <p class="additional-price-add-ons">&plus;&dollar;2/mo</p>
+            <p class="additional-price-add-ons">${LargerStoragePrice}</p>
 
         </label>
 
@@ -340,7 +363,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </div>
 
-            <p class="additional-price-add-ons">&plus;&dollar;2/mo</p>
+            <p class="additional-price-add-ons">${CustomizableProfilePrice}</p>
             
         </label>
 
@@ -354,7 +377,7 @@ const GoToStep = (stepNumber, form) => {
             })
         </script>
         
-        <div class="mobile-next-step-button next-step-btn-desktop">
+        <div class="desktop-next-step-button next-step-btn-desktop hidden">
             <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
             <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
         </div>
@@ -394,6 +417,18 @@ const Submit = () => {
     
     // If the form validation returns true, then go to next step and remove active step from the previous step.
     if (Validate(currentStep)){
+
+        // Storing all values of input elements of step one.
+        if (currentStep === 1) {
+            userName = document.getElementById('name').value;
+            userEmail = document.getElementById('email').value;
+            userPhone = document.getElementById('phone').value;
+        } else if (currentStep === 2) {     // Storing all values of input elements of step two.
+            if (document.getElementById('plan-type').checked) {
+                monthly = false;
+            }
+        }
+
         RemoveActiveStep(currentStep);
         // Increase the current step by one.
         currentStep += 1;

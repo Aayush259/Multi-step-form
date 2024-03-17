@@ -465,3 +465,16 @@ p.error-text {
         margin: 0;
     }
 }
+
+@media only screen and (max-width: 474px) {
+
+    .checkbox-input-title {
+        font-size: 0.8rem;
+        padding-right: 5px;
+    }
+
+    .checkbox-input-sub-title {
+        font-size: 0.7rem;
+        padding-right: 5px;
+    }
+}
