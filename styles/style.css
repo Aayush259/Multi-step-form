@@ -319,7 +319,7 @@ p.error-text {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 @media only screen and (max-width: 830px) {
@@ -415,6 +415,12 @@ p.error-text {
 
     .desktop-next-step-button {
         display: none;
+    }
+}
+
+@media only screen and (max-width: 810px) {
+    .add-ons {
+        width: 100%;
     }
 }
 

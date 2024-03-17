@@ -216,6 +216,14 @@ const InputImageRemoveFocus = (removedFocusedElement) => {
 */
 const GoToStep = (stepNumber, form) => {
 
+    const GoBackButton = document.getElementById('go-back-btn');
+
+    if (stepNumber !== 1) {
+        GoBackButton.classList.remove('hidden');
+    } else {
+        GoBackButton.classList.add('hidden');
+    }
+
     const Header = document.getElementById('header');
     const BelowHeader = document.getElementById('below-header');
     
@@ -232,7 +240,7 @@ const GoToStep = (stepNumber, form) => {
         <label for="phone">Phone Number<span class="error-text"></span></label>
         <input type="text" id="phone" name="phone" placeholder="e.g. +1 234 567 890" autocomplete="off">
 
-        <button type="submit" class="next-step-btn">Next Step</button>
+        <button type="submit" class="next-step-btn next-step-btn-desktop">Next Step</button>
         `;
     } else if (stepNumber === 2) {      // When stepNumber is 2.
         Header.innerHTML = `Select your plan`;
@@ -283,7 +291,7 @@ const GoToStep = (stepNumber, form) => {
             <p class="plan-type-text yearly">Yearly</p>
         </div>
 
-        <div class="desktop-next-step-button">
+        <div class="desktop-next-step-button next-step-btn-desktop">
             <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
             <button type="submit" class="next-step-btn">Next Step</button>
         </div>
@@ -346,7 +354,7 @@ const GoToStep = (stepNumber, form) => {
             })
         </script>
         
-        <div class="mobile-next-step-button">
+        <div class="mobile-next-step-button next-step-btn-desktop">
             <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
             <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
         </div>

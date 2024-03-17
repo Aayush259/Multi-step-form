@@ -65,15 +65,35 @@
                 <label for="phone">Phone Number<span class="error-text"></span></label>
                 <input type="text" id="phone" name="phone" placeholder="e.g. +1 234 567 890" autocomplete="off">
 
-                <button type="submit" class="next-step-btn">Next Step</button>
+                <button type="submit" class="next-step-btn next-step-btn-desktop hidden">Next Step</button>
             </form>
 
-            <div class="mobile-next-step-button">
-                <button type="submit" class="next-step-btn hidden">Next Step</button>
+            <div class="mobile-next-step-button next-step-btn-mobile hidden">
+                <button class="previous-step-btn hidden" id="go-back-btn">Go Back</button>
+                <button type="submit" class="next-step-btn">Next Step</button>
             </div>
 
         </div>
     </main>
+    <script>
+        const DeviceWidth = window.innerWidth;
+
+        if (DeviceWidth >= 785) {
+            document.querySelector('.next-step-btn-desktop').classList.remove('hidden');
+        } else {
+            document.querySelector('.next-step-btn-mobile').classList.remove('hidden');
+        }
+
+        window.onresize = function() {
+            if (window.innerWidth >= 780) {
+                document.querySelector('.next-step-btn-desktop').classList.remove('hidden');
+                document.querySelector('.next-step-btn-mobile').classList.add('hidden');
+            } else {
+                document.querySelector('.next-step-btn-mobile').classList.remove('hidden');
+                document.querySelector('.next-step-btn-desktop').classList.add('hidden');
+            }
+        }
+    </script>
     <script src="./scripts/script.js"></script>
 </body>
 </html>
