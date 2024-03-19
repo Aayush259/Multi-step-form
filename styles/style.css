@@ -16,6 +16,7 @@
     --Magnolia: hsl(217, 100%, 97%);
     --Alabaster: hsl(231, 100%, 99%);
     --White: hsl(0, 0%, 100%);
+    --Bold: 700;
 }
 
 body {
@@ -270,6 +271,74 @@ label[for="plan-type"]::before {
     border-color: var(--Purplish-blue);
 }
 
+hr {
+    border: none;
+    border-top: 2px solid hsl(230, 24%, 90%);
+    margin: 10px 3px 10px 3px;
+}
+
+.finishing-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--Magnolia);
+    color: var(--Cool-gray);
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 120%;
+}
+
+.finishing-container .selected-plan, .finishing-container .selected-add-ons-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.finishing-container .selected-plan-name {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.finishing-container .selected-plan {
+    color: var(--Marine-blue);
+}
+
+#correction-link {
+    color: var(--Purplish-blue);
+    font-size: 0.9rem;
+}
+
+.finishing-container .selected-add-ons, .total {
+    color: var(--Cool-gray);
+    font-size: 0.9rem;
+}
+
+.finishing-container .selected-add-ons-name p:nth-last-child(1) {
+    color: #000;
+}
+
+.bold {
+    font-weight: var(--Bold);
+}
+
+.total {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 120%;
+    margin-top: 20px;
+}
+
+.total .final-price {
+    color: var(--Purplish-blue);
+    font-size: 1.1rem;
+}
+
 .previous-step-btn {
     position: absolute;
     bottom: 0;
@@ -278,7 +347,7 @@ label[for="plan-type"]::before {
     background-color: var(--White);
     border: none;
     color: var(--Cool-gray);
-    font-weight: 700;
+    font-weight: var(--Bold);
     cursor: pointer;
 }
 

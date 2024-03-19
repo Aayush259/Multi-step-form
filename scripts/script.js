@@ -1,11 +1,28 @@
-console.log("Square");
-
 let userName = '';
 let userEmail = '';
 let userPhone = '';
 let monthly = true;
 let imageOption = '';
+let imageOptionPrice = 0;
 let addOns = [];
+let totalPrice = 0;
+
+
+/*
+    This function displays the next step button and go back buttons based on device width.
+ */
+function DisplayNextBtn() {
+
+    const DeviceWidth = window.innerWidth;
+
+    if (DeviceWidth >= 785) {
+        document.querySelector('.next-step-btn-desktop').classList.remove('hidden');
+    } else {
+        document.querySelector('.next-step-btn-mobile').classList.remove('hidden');
+    }
+}
+
+DisplayNextBtn();
 
 /*
     This function displays error on screen.
@@ -261,7 +278,7 @@ const GoToStep = (stepNumber, form) => {
 
         <div class="image-option-container">
                     
-            <label for="arcade" class="image-option" onclick="imageOption = 'Arcade'">
+            <label for="arcade" class="image-option" onclick="imageOption = 'Arcade'; imageOptionPrice = 9">
                 <input type="image" src="./assets/images/icon-arcade.svg" alt="Arcade" id="arcade" value="arcade" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
@@ -271,7 +288,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </label>
 
-            <label for="advanced" class="image-option" onclick="imageOption = 'Advanced'">
+            <label for="advanced" class="image-option" onclick="imageOption = 'Advanced'; imageOptionPrice = 12">
                 <input type="image" src="./assets/images/icon-advanced.svg" alt="Advanced" id="advanced" value="advanced" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
@@ -281,7 +298,7 @@ const GoToStep = (stepNumber, form) => {
                 </div>
             </label>
 
-            <label for="pro" class="image-option" onclick="imageOption = 'Pro'">
+            <label for="pro" class="image-option" onclick="imageOption = 'Pro'; imageOptionPrice = 15">
                 <input type="image" src="./assets/images/icon-pro.svg" alt="Pro" id="pro" value="pro" onfocus="InputImageFocus(this)" onblur="InputImageRemoveFocus(this)">
 
                 <div class="input-image-text">
@@ -328,7 +345,7 @@ const GoToStep = (stepNumber, form) => {
         <label for="online-service" class="add-ons">
 
             <div class="input-add-ons">
-                <input type="checkbox" name="online-service" id="online-service" autocomplete="off">
+                <input type="checkbox" name="online-service" id="online-service" autocomplete="off" price="1">
                 <div class="description">
                     <p class="checkbox-input-title">Online service</p>
                     <p class="checkbox-input-sub-title">Access to multiplayer games</p>
@@ -342,7 +359,7 @@ const GoToStep = (stepNumber, form) => {
         <label for="larger-storage" class="add-ons">
 
             <div class="input-add-ons">
-                <input type="checkbox" name="larger-storage" id="larger-storage" autocomplete="off">
+                <input type="checkbox" name="larger-storage" id="larger-storage" autocomplete="off" price="2">
                 <div class="description">
                     <p class="checkbox-input-title">Larger storage</p>
                     <p class="checkbox-input-sub-title">Extra 1TB of cloud save</p>
@@ -356,7 +373,7 @@ const GoToStep = (stepNumber, form) => {
         <label for="customizable-profile" class="add-ons">
 
             <div class="input-add-ons">
-                <input type="checkbox" name="customizable-profile" id="customizable-profile"  autocomplete="off">
+                <input type="checkbox" name="customizable-profile" id="customizable-profile"  autocomplete="off" price="2">
                 <div class="description">
                     <p class="checkbox-input-title">Customizable profile</p>
                     <p class="checkbox-input-sub-title">Custom theme on your profile</p>
@@ -368,11 +385,12 @@ const GoToStep = (stepNumber, form) => {
         </label>
 
         <script>
-            const Inputs = document.querySelectorAll('input[type="checkbox"]');
+            console.log('hi');
+            const Labels = document.querySelectorAll('.add-ons');
 
-            Inputs.forEach(input => {
-                input.addEventListener('click', () => {
-                    input.parentNode.parentNode.classList.toggle('purple-border');
+            Labels.forEach(label => {
+                label.addEventListener('click', () => {
+                    label.classList.toggle('purple-border');
                 })
             })
         </script>
@@ -382,6 +400,74 @@ const GoToStep = (stepNumber, form) => {
             <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
         </div>
         `;
+    } else if (stepNumber === 4) {
+        Header.innerHTML = `Finishing up`;
+        BelowHeader.innerHTML = `Double-check everything looks OK before confirming.`;
+
+        const SelectedPlanName = imageOption;
+        let selectedPlanPrice = imageOptionPrice.toString() + `/mo`;
+        let PlanType = 'Monthly';
+        let durationType = 'month';
+        let SelectedAddOnsElements = [];
+        let price = {
+            'Online service': undefined,
+            'Larger storage': undefined,
+            'Customizable profile': undefined
+        }
+
+        if (monthly) {
+            price["Online service"] = `&plus;&dollar;1/mo`;
+            price["Larger storage"] = `&plus;&dollar;2/mo`;
+            price["Customizable profile"] = `&plus;&dollar;2/mo`;
+            totalPrice += imageOptionPrice;
+            totalPrice = totalPrice.toString() + `/mo`;
+        } else {
+            price["Online service"] = `&plus;&dollar;10/yr`;
+            price["Larger storage"] = `&plus;&dollar;20/yr`;
+            price["Customizable profile"] = `&plus;&dollar;20/yr`;
+            PlanType = 'Yearly';
+            selectedPlanPrice = imageOptionPrice.toString() + `0` + `/yr`;
+            durationType = 'year';
+            totalPrice += parseInt(imageOptionPrice.toString() + `0`);
+            totalPrice = totalPrice.toString() + `/yr`;
+        }
+
+        for (i=0; i<addOns.length; i++) {
+            SelectedAddOnsElements.push(`<div class="selected-add-ons-name">
+                <p>${addOns[i]}</p>
+                <p>${price[addOns[i]]}</p>
+            </div>`);
+        }
+
+        const SelectedAddOnsElementsString = SelectedAddOnsElements.join('');
+
+        form.innerHTML = `
+        <div class="finishing-container">
+
+            <div class="selected-plan">
+                <div class="selected-plan-name">
+                    <p class="bold">${SelectedPlanName} &lpar;${PlanType}&rpar;</p>
+                    <a href="#" id="correction-link">Change</a>
+                </div>
+                <p class="price-txt bold">&dollar;${selectedPlanPrice}</p>
+            </div>
+            <hr>
+
+            <div class="selected-add-ons">
+                ${SelectedAddOnsElementsString}
+            </div>
+        </div>
+
+        <div class="total">
+            <p>Total &lpar;per ${durationType}&rpar;</p>
+            <p class="final-price bold">&plus;&dollar;${totalPrice}</p>
+        </div>
+
+        <div class="desktop-next-step-button next-step-btn-desktop hidden">
+            <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
+            <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
+        </div>
+        `
     }
 }
 
@@ -427,6 +513,19 @@ const Submit = () => {
             if (document.getElementById('plan-type').checked) {
                 monthly = false;
             }
+        } else if (currentStep === 3) {     // Storing all values of input elements of step two.
+
+            const AllCheckedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+            for (i = 0; i < AllCheckedBoxes.length; i++) {
+                addOns.push(`${AllCheckedBoxes[i].nextElementSibling.querySelector('p').textContent}`);
+
+                if (monthly) {
+                    totalPrice += parseInt(AllCheckedBoxes[i].getAttribute('price'));
+                } else {
+                    totalPrice += parseInt(AllCheckedBoxes[i].getAttribute('price') + `0`);
+                }
+            }
         }
 
         RemoveActiveStep(currentStep);
@@ -434,6 +533,7 @@ const Submit = () => {
         currentStep += 1;
         GoToStep(currentStep, Form);
         AddActiveStep(currentStep);
+        DisplayNextBtn();
     }
 
 }

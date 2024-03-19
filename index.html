@@ -76,14 +76,6 @@
         </div>
     </main>
     <script>
-        const DeviceWidth = window.innerWidth;
-
-        if (DeviceWidth >= 785) {
-            document.querySelector('.next-step-btn-desktop').classList.remove('hidden');
-        } else {
-            document.querySelector('.next-step-btn-mobile').classList.remove('hidden');
-        }
-
         window.onresize = function() {
             if (window.innerWidth >= 780) {
                 document.querySelector('.next-step-btn-desktop').classList.remove('hidden');
