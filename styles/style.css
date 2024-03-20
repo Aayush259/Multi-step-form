@@ -391,6 +391,10 @@ p.error-text {
     display: none !important;
 }
 
+.desktop-next-step-button {
+    max-width: 100%;
+}
+
 @media only screen and (max-width: 830px) {
     #Sidebar {
         background-size: cover;
@@ -399,6 +403,14 @@ p.error-text {
 
     #form {
         padding-top: 1rem;
+    }
+
+    .finishing-container {
+        width: 100%;
+    }
+
+    .total {
+        width: 100%;
     }
 }
 

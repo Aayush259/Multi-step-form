@@ -397,7 +397,7 @@ const GoToStep = (stepNumber, form) => {
         
         <div class="desktop-next-step-button next-step-btn-desktop hidden">
             <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
-            <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
+            <button type="submit" class="next-step-btn" style="right: -30%;">Next Step</button>
         </div>
         `;
     } else if (stepNumber === 4) {
@@ -465,7 +465,7 @@ const GoToStep = (stepNumber, form) => {
 
         <div class="desktop-next-step-button next-step-btn-desktop hidden">
             <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
-            <button type="submit" class="next-step-btn" style="right: -35%;">Next Step</button>
+            <button type="submit" class="next-step-btn" style="right: -15%;">Next Step</button>
         </div>
         `
     }
