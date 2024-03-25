@@ -11,7 +11,11 @@ let totalPrice = 0;
 /*
     This function displays the next step button and go back buttons based on device width.
  */
-function DisplayNextBtn() {
+function DisplayNextBtn(stepNumber) {
+
+    if (stepNumber >= 5) {
+        return;
+    }
 
     const DeviceWidth = window.innerWidth;
 
@@ -244,10 +248,10 @@ const GoToStep = (stepNumber, form) => {
     const GoBackButton = document.getElementById('go-back-btn');
 
     // If current step number is not 1 then dispay go back button otherwise hide this go back button.
-    if (stepNumber !== 1) {
-        GoBackButton.classList.remove('hidden');
-    } else {
+    if (stepNumber === 1) {
         GoBackButton.classList.add('hidden');
+    } else {
+        GoBackButton.classList.remove('hidden');
     }
 
     // Getting header and below header text elements.
@@ -319,7 +323,7 @@ const GoToStep = (stepNumber, form) => {
         </div>
 
         <div class="desktop-next-step-button next-step-btn-desktop">
-            <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
+            <button class="previous-step-btn" onclick="GoBack()" id="go-back-btn">Go Back</button>
             <button type="submit" class="next-step-btn">Next Step</button>
         </div>
         `;
@@ -395,8 +399,8 @@ const GoToStep = (stepNumber, form) => {
             })
         </script>
         
-        <div class="desktop-next-step-button next-step-btn-desktop hidden">
-            <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
+        <div class="desktop-next-step-button next-step-btn-desktop">
+            <button class="previous-step-btn" onclick="GoBack()" id="go-back-btn">Go Back</button>
             <button type="submit" class="next-step-btn" style="right: -30%;">Next Step</button>
         </div>
         `;
@@ -463,11 +467,28 @@ const GoToStep = (stepNumber, form) => {
             <p class="final-price bold">&plus;&dollar;${totalPrice}</p>
         </div>
 
-        <div class="desktop-next-step-button next-step-btn-desktop hidden">
-            <button class="previous-step-btn" onclick="GoBack()">Go Back</button>
+        <div class="desktop-next-step-button next-step-btn-desktop">
+            <button class="previous-step-btn" onclick="GoBack()" id="go-back-btn">Go Back</button>
             <button type="submit" class="next-step-btn" style="right: -15%;">Next Step</button>
         </div>
         `
+    } else if (stepNumber === 5) {
+
+        // Getting form container.
+        const FormContainer = document.querySelector('#form');
+        FormContainer.classList.add('thanks-screen');
+
+        FormContainer.innerHTML = `
+            <img src="./assets/images/icon-thank-you.svg" alt="Thank You" id="thank-you-image">
+            <h1 id="header">Thank you!</h1>
+            <p class="sub-title" id="below-header">Thanks for confirming your subscription! We hope you have fun using our platform. If you ever need support, please feel free to email us at support@loremgaming.com.</p>
+        `
+
+        // Removing all buttons.
+        const Buttons = document.querySelectorAll('button');
+        Buttons.forEach(button => {
+            button.classList.add('hidden');
+        })
     }
 }
 
@@ -483,8 +504,12 @@ const RemoveActiveStep = (stepNumber) => {
     This function adds the 'active-step' class from the .number element of stepnumber. Means the number whose background color shows the active state of the step, this function adds that background color.
 */
 const AddActiveStep = (stepNumber) => {
-    const CurrentStepNumber = document.querySelector(`#Sidebar .step:nth-child(${stepNumber}) .number`);
-    CurrentStepNumber.classList.add('active-step');
+    try {
+        const CurrentStepNumber = document.querySelector(`#Sidebar .step:nth-child(${stepNumber}) .number`);
+        CurrentStepNumber.classList.add('active-step');
+    } catch {
+        // DO NOTHING.
+    }
 }
 
 // Initializing currentStep by 1.
@@ -533,7 +558,7 @@ const Submit = () => {
         currentStep += 1;
         GoToStep(currentStep, Form);
         AddActiveStep(currentStep);
-        DisplayNextBtn();
+        DisplayNextBtn(currentStep);
     }
 
 }
